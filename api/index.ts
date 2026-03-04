@@ -26,12 +26,33 @@ app.get("/api/health", (req, res) => {
 const MOCK_USER_ID = "user_123";
 
 app.get("/api/me", async (req, res) => {
-    const { data: user } = await supabase.from('users').select('*').eq('id', MOCK_USER_ID).single();
+    let { data: user } = await supabase.from('users').select('*').eq('id', MOCK_USER_ID).single();
+    if (!user) {
+        // Lazily instantiate mock user to prevent 404s on fresh deployments
+        await supabase.from('users').upsert({
+            id: MOCK_USER_ID,
+            email: "user@medisafe.app",
+            name: "Demo User",
+            setup_for: "myself"
+        });
+
+        await supabase.from('user_preferences').upsert({
+            user_id: MOCK_USER_ID,
+            reminder_lead_minutes: 10,
+            notifications_browser: 1,
+            notifications_email: 1,
+            notifications_sound: 1
+        });
+
+        user = await supabase.from('users').select('*').eq('id', MOCK_USER_ID).single().then(r => r.data);
+    }
+
     if (!user) {
         return res.json({ authenticated: false });
     }
+
     const { data: prefs } = await supabase.from('user_preferences').select('*').eq('user_id', MOCK_USER_ID).single();
-    res.json({ authenticated: true, user, preferences: prefs });
+    res.json({ authenticated: true, user, preferences: prefs || { reminder_lead_minutes: 10 } });
 });
 
 app.post("/api/setup", async (req, res) => {
@@ -111,11 +132,13 @@ app.put("/api/medications/:id", async (req, res) => {
 
 app.post("/api/profile", async (req, res) => {
     const { name, setupFor, patientName } = req.body;
-    await supabase.from('users').update({
+    await supabase.from('users').upsert({
+        id: MOCK_USER_ID,
         name,
         setup_for: setupFor,
-        patient_name: patientName
-    }).eq('id', MOCK_USER_ID);
+        patient_name: patientName,
+        email: "user@medisafe.app"
+    });
     res.json({ success: true });
 });
 
