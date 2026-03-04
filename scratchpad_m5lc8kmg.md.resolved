@@ -1,0 +1,25 @@
+# MediSafe QA Audit Checklist
+
+- [/] Open `http://localhost:3000` and assess the landing page (Note: App started directly on dashboard, skipping landing page. Investigating reset.)
+- [ ] Complete Onboarding Wizard:
+    - [ ] Click 'Get Started'
+    - [ ] Enter Name
+    - [ ] Select 'Someone else'
+    - [ ] Add 'Aspirin' 500mg daily at 08:00
+- [ ] Dashboard Check:
+    - [ ] Medication displayed correctly
+    - [ ] Adherence ring check
+    - [ ] Interaction alert check
+- [ ] Add Medication from Dashboard:
+    - [ ] Add 'Warfarin' 5mg daily
+- [ ] Safety Section:
+    - [ ] Verify interaction detection (Aspirin + Warfarin)
+- [ ] AI Chat:
+    - [ ] Ask "Can I take Aspirin and Warfarin together?"
+    - [ ] Verify response
+- [ ] Settings:
+    - [ ] Toggle notification preference
+- [ ] UI/UX Audit & Bug Hunting:
+    - [x] Bug: Dashboard shows "No meds added yet" but also says "3 of 4 doses taken today" and shows 75% adherence.
+    - [ ] Check for glitches, broken links, non-functional buttons
+    - [ ] Evaluate spacing, contrast, and layout

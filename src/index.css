@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+/* ============================================================
+   LIGHT MODE TOKENS
+   ============================================================ */
+:root {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", serif;
+
+  /* Core palette */
+  --primary: #0F3D3E;
+  --accent: #F97316;
+  --bg-base: #F4F7F6;
+
+  /* Text hierarchy */
+  --text-heading: #0F3D3E;
+  --text-body: #1e4e4f;
+  --text-muted: #3d6061;
+  --text-subtle: #5f8a8b;
+  --text-on-accent: #ffffff;
+
+  /* Surface layers */
+  --card-bg: #ffffff;
+  --card-border: #cde4e4;
+  --surface-tint: rgba(15, 61, 62, 0.03);
+  --paper: #F4F7F6;
+
+  /* Sage scale */
+  --cream: #0F3D3E;
+  --sage-50: #e8f4f4;
+  --sage-100: #cde4e4;
+  --sage-200: #a3cccc;
+  --sage-300: #7fb2b2;
+  --sage-400: #4d8f8f;
+  --sage-600: #10b981;
+  --sage-700: #F97316;
+  --sage-800: #ea580c;
+  --sage-900: #fff4ed;
+
+  /* Input / form fields */
+  --input-bg: #edf5f5;
+  --input-text: #0F3D3E;
+  --input-placeholder: #7fa9a9;
+
+  /* UI misc */
+  --border-subtle: rgba(15, 61, 62, 0.10);
+  --shadow-card: 0 8px 28px rgba(15, 61, 62, 0.08);
+  --shadow-hover: 0 16px 40px rgba(15, 61, 62, 0.12);
+}
+
+[data-theme='dark'] {
+  /* Core palette */
+  --primary: #e2f4f4;
+  --accent: #fb923c;
+  --bg-base: #050808;
+
+  /* Text hierarchy */
+  --text-heading: #ffffff;
+  --text-body: #d1eaea;
+  --text-muted: #9cc2c2;
+  --text-subtle: #6e9a9a;
+  --text-on-accent: #000000;
+
+  /* Surface layers */
+  --card-bg: #0d1717;
+  --card-border: rgba(255, 255, 255, 0.1);
+  --surface-tint: rgba(255, 255, 255, 0.03);
+  --paper: #050808;
+
+  /* Sage scale */
+  --cream: #ffffff;
+  --sage-50: #0d1717;
+  --sage-100: #142323;
+  --sage-200: #1c2e2e;
+  --sage-300: #2d4242;
+  --sage-400: #7ab0b0;
+  --sage-600: #34d399;
+  --sage-700: #fb923c;
+  --sage-800: #f97316;
+  --sage-900: #3a2212;
+
+  /* Input / form fields */
+  --input-bg: #1c2e2e;
+  --input-text: #e2f4f4;
+  --input-placeholder: #4a7a7a;
+
+  /* UI misc */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --shadow-card: 0 8px 28px rgba(0, 0, 0, 0.40);
+  --shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ============================================================
+   TAILWIND THEME BRIDGE
+   ============================================================ */
+@theme {
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-bg-base: var(--bg-base);
+
+  --color-cream: var(--cream);
+  --color-sage-50: var(--sage-50);
+  --color-sage-100: var(--sage-100);
+  --color-sage-200: var(--sage-200);
+  --color-sage-400: var(--sage-400);
+  --color-sage-600: var(--sage-600);
+  --color-sage-700: var(--sage-700);
+  --color-sage-800: var(--sage-800);
+  --color-sage-900: var(--sage-900);
+  --color-paper: var(--paper);
+}
+
+/* ============================================================
+   BASE STYLES
+   ============================================================ */
+@layer base {
+  body {
+    @apply bg-bg-base font-sans antialiased;
+    color: var(--text-body);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--text-heading);
+    font-family: var(--font-serif);
+  }
+
+  /* Inputs — always use theme-aware colors */
+  input,
+  select,
+  textarea {
+    color: var(--input-text) !important;
+    background-color: var(--input-bg);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--input-placeholder) !important;
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   COMPONENT STYLES
+   ============================================================ */
+
+/* Dashboard card */
+.dashboard-card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  @apply rounded-[20px] p-8 transition-all duration-300;
+  box-shadow: var(--shadow-card);
+}
+
+.dashboard-card:hover {
+  @apply -translate-y-1.5;
+  box-shadow: var(--shadow-hover);
+}
+
+/* Trend badges */
+.trend-up {
+  @apply px-2.5 py-1 rounded-full text-[10px] font-black flex items-center gap-1;
+  background: rgba(16, 185, 129, 0.12);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+[data-theme='dark'] .trend-up {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.trend-down {
+  @apply px-2.5 py-1 rounded-full text-[10px] font-black flex items-center gap-1;
+  background: rgba(239, 68, 68, 0.10);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.20);
+}
+
+/* Chart insight */
+.chart-insight {
+  @apply mt-6 pt-6 text-[11px] font-bold flex items-center gap-2;
+  border-top: 1px solid var(--sage-100);
+  color: var(--text-muted);
+}
+
+/* Markdown content */
+.markdown-body {
+  @apply leading-relaxed;
+  color: var(--text-body);
+}
+
+[data-theme='dark'] .markdown-body {
+  color: var(--text-body);
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4 {
+  color: var(--text-heading);
+  margin-top: 1em;
+  margin-bottom: 0.4em;
+}
+
+.markdown-body strong,
+.markdown-body b {
+  color: var(--text-heading);
+  font-weight: 700;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 1.25rem;
+}
+
+.markdown-body li {
+  margin-bottom: 0.25rem;
+}
+
+.markdown-body code {
+  background: var(--sage-50);
+  color: var(--accent);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--sage-200);
+  border-radius: 99px;
+}
+
+/* ============================================================
+   DARK MODE OVERRIDES — targeted helpers
+   ============================================================ */
+
+/* Text that was hardcoded as slate */
+[data-theme='dark'] .text-slate-400 {
+  color: var(--text-muted) !important;
+}
+
+/* Selection highlight */
+::selection {
+  background: rgba(249, 115, 22, 0.2);
+  color: var(--text-heading);
+}

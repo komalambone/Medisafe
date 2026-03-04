@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+.env.local
+medisafe.db
+medisafe.db-journal
+.DS_Store

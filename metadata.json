@@ -1,0 +1,5 @@
+{
+  "name": "MediSafe",
+  "description": "A medication safety companion for tracking doses, checking drug interactions, and managing schedules with plain-language AI guidance.",
+  "requestFramePermissions": ["notifications"]
+}
